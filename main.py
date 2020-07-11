@@ -6,12 +6,16 @@ from PIL.ExifTags import GPSTAGS
 
 
 pic_location = ""
+
+
 def get_exif(filename):
+
     image = Image.open(filename)
     image.verify()
     return image._getexif()
 
 def get_labeled_exif(exif):
+
     labeled = {}
     for (key, val) in exif.items():
         labeled[TAGS.get(key)] = val
@@ -19,6 +23,7 @@ def get_labeled_exif(exif):
     return labeled
 
 def get_geotagging(exif):
+
     if not exif:
         raise ValueError("No EXIF metadata found")
 
@@ -34,8 +39,8 @@ def get_geotagging(exif):
 
     return geotagging
 
-
-
+#TODO convert gps coordinates into decimal
+#TODO Setup nominatim for reverse geocoding https://nominatim.org/release-docs/develop/api/Reverse/
 exif = get_exif(pic_location)
 geotags = get_geotagging(exif)
 print(geotags)
